@@ -1,0 +1,11 @@
+Welcome to "Project". 
+
+This project is using postgreSQL to install it please follow the below instructions. 
+1- https://www.postgresql.org/download/
+2- Install Postgres
+3- To launch PostgreSQL go to Start Menu and search pgAdmin 4
+4-run Database on port 5432
+5- Enter your password as in app.py
+6-install flask and other depandancies by running $ pip install -r requirements.txt in ur command line
+7- run app.py file 
+8- open your browser inhttp://localhost:1010/ to find the landing page.
