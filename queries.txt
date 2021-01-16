@@ -1,0 +1,42 @@
+create tables:
+venue 
+
+CREATE TABLE venue (
+id SERIAL   PRIMARY KEY,
+venue_name VARCHAR(255),
+city VARCHAR(120),
+venue_state VARCHAR(120),
+address VARCHAR(120),
+phone VARCHAR(120),
+image_link VARCHAR(500),
+facebook_link VARCHAR(120),
+genres VARCHAR(120),
+seeking_artist varchar(255),
+website varchar(255),
+seeking_description varchar(255)
+);
+
+artist
+
+CREATE TABLE artist (
+id SERIAL   PRIMARY KEY,
+artist_name VARCHAR(255),
+city VARCHAR(120),
+venue_state VARCHAR(120),
+phone VARCHAR(120),
+image_link VARCHAR(500),
+facebook_link VARCHAR(120),
+genres VARCHAR(120),
+seeking_venue varchar(255),
+website varchar(255),
+seeking_description varchar(255)
+);
+
+show
+
+CREATE TABLE show (
+id SERIAL   PRIMARY KEY,
+artist_id INT,
+venue_id INT,
+start_time timestamp with time zone
+	)
