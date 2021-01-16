@@ -34,6 +34,8 @@ pip install postgres
 pip install Flask
 pip install Flask-Migrate
 ```
+or you can run all dependencies using  pip install -r requirements.txt
+
 > **Note** - If we do not mention the specific version of a package, then the default latest stable package will be installed. 
 
 ### 2. Frontend Dependencies
@@ -133,27 +135,6 @@ Looking to go above and beyond? This is the right section for you! Here are some
 Best of luck in your final project! Fyyur depends on you!
 
 
-## Development Setup
-1. **Download the project starter code locally**
-```
-git clone https://github.com/udacity/FSND.git
-cd FSND/projects/01_fyyur/starter_code 
-```
-
-2. **Create an empty repository in your Github account online. To change the remote repository path in your local repository, use the commands below:**
-```
-git remote -v 
-git remote remove origin 
-git remote add origin <https://github.com/<USERNAME>/<REPO_NAME>.git>
-git branch -M master
-```
-Once you have finished editing your code, you can push the local repository to your Github account using the following commands.
-```
-git add . --all   
-git commit -m "your comment"
-git push -u origin master
-```
-
 3. **Initialize and activate a virtualenv using:**
 ```
 python -m virtualenv env
@@ -168,14 +149,21 @@ source env/Scripts/activate
 ```
 pip install -r requirements.txt
 ```
+5. **do the following to run migraion commands in your project folder:**
+```
+flask db init 
+use db.create().all() only if you are creating the table for the first time
+flask db migrate to define changes
+flask db upgrade
+```
 
-5. **Run the development server:**
+6. **Run the development server:**
 ```
 export FLASK_APP=myapp
 export FLASK_ENV=development # enables debug mode
 python3 app.py
 ```
 
-6. **Verify on the Browser**<br>
+7. **Verify on the Browser**<br>
 Navigate to project homepage [http://127.0.0.1:1010/](http://127.0.0.1:1010/) or [http://localhost:1010](http://localhost:1010) 
 
