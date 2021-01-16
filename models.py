@@ -23,8 +23,7 @@ Base = declarative_base()
 app = Flask(__name__)
 moment = Moment(app)
 app.config.from_object('config')
-DB_URL = 'postgres://scholarship@localhost:5432/scholarship'
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:scholarship@localhost:5432/scholarship"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:scholarshipFWDudicity@localhost:5432/scholarshipFWDudicity"
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # silence the deprecation warning
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
