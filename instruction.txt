@@ -9,3 +9,5 @@ This project is using postgreSQL to install it please follow the below instructi
 6-install flask and other depandancies by running $ pip install -r requirements.txt in ur command line
 7- run app.py file 
 8- open your browser inhttp://localhost:1010/ to find the landing page.
+
+All the details will be found in the read me file, you can open it by open it in visualstudio or any other editor
