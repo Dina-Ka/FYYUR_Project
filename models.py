@@ -70,9 +70,8 @@ class show(db.Model):
     __tablename__ = 'show'
 
     id = db.Column(db.Integer, primary_key=True)
-    artist_id = db.Column(db.String(255),db.ForeignKey('artist.id'))
-    venue_id = db.Column(db.String(255),db.ForeignKey('venue.id'))
+    artist_id = db.Column(db.String(255),db.ForeignKey('artist.id'), nullable=False)
+    venue_id = db.Column(db.String(255),db.ForeignKey('venue.id'), nullable=False)
     start_time =db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    venue = relationship("venue")
-    artist = relationship("artist")
+
 
