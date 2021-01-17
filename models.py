@@ -24,7 +24,7 @@ app = Flask(__name__)
 moment = Moment(app)
 app.config.from_object('config')
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:scholarship@localhost:5432/scholarship"
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # silence the deprecation warning
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # silence the deprecation warning
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 #----------------------------------------------------------------------------#
@@ -46,6 +46,8 @@ class venue(db.Model):
     seeking_artist = db.Column(db.String(120))
     website = db.Column(db.String(255))
     seeking_description = db.Column(db.String(255))
+    venue = db.relationship('venue', secondary='show')
+    show = db.relationship('show', backref=('venue'))
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
@@ -63,6 +65,8 @@ class artist(db.Model):
     seeking_venue =  db.Column(db.String(120))
     website =  db.Column(db.String(255))
     seeking_description = db.Column(db.String(255))
+    artist = db.relationship('venue', secondary='show')
+    show = db.relationship('show', backref=('artist'))
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
 # TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
@@ -73,5 +77,7 @@ class show(db.Model):
     artist_id = db.Column(db.String(255),db.ForeignKey('artist.id'), nullable=False)
     venue_id = db.Column(db.String(255),db.ForeignKey('venue.id'), nullable=False)
     start_time =db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    venue = relationship("venue")
+    artist = relationship("artist")
 
 
