@@ -149,8 +149,10 @@ def create_venue_submission():
   # TODO: insert form data as a new Venue record in the db, instead
   # TODO: modify data to be the data object returned from db insertion
   # TODO: on unsuccessful db insert, flash an error instead.
-
-  if request.method == 'POST':
+  form = VenueForm()
+  # print(form)
+  # print(form.validate_on_submit())
+  if request.method == 'POST' and form.validate_on_submit():
     venue_name = request.form.get('name')
     city = request.form.get('city')
     venue_state = request.form.get('state')
@@ -164,28 +166,32 @@ def create_venue_submission():
     seeking_artist = request.form.get('seeking_artist')
     website = request.form.get('website')
     seeking_description = request.form.get('seeking_description')
-  try:
-    create_venue_submission = venue(
-      venue_name=venue_name,
-      city=city,
-      venue_state=venue_state,
-      address=address,
-      phone=phone,
-      image_link=image_link,
-      genres=genres,
-      facebook_link=facebook_link,
-      seeking_artist=seeking_artist,
-      website=website,
-      seeking_description=seeking_description
-    )
-    db.session.add(create_venue_submission)
-    db.session.commit()
-    # on successful db insert, flash success
-    flash('Venue ' + request.form['name'] + ' was successfully listed!')
-  except:
-    flash('An error occurred. Venue ' + request.form['name'] + ' could not be listed.')
-  finally:
-    db.session.close()
+    try:
+        create_venue_submission = venue(
+          venue_name=venue_name,
+          city=city,
+          venue_state=venue_state,
+          address=address,
+          phone=phone,
+          image_link=image_link,
+          genres=genres,
+          facebook_link=facebook_link,
+          seeking_artist=seeking_artist,
+          website=website,
+          seeking_description=seeking_description
+        )
+        db.session.add(create_venue_submission)
+        db.session.commit()
+        # on successful db insert, flash success
+        flash('Venue ' + request.form['name'] + ' was successfully listed!')
+    except:
+        flash('An error occurred. Venue ' + request.form['name'] + ' could not be listed.')
+        db.session.rollback()
+    finally:
+        db.session.close()
+  else:
+      flash('Invaild inputs')
+      return render_template('forms/new_venue.html', form=form)
 
   return render_template('pages/home.html')
 
@@ -336,42 +342,46 @@ def create_artist_submission():
   # called upon submitting the new artist listing form
   # TODO: insert form data as a new Venue record in the db, instead
   # TODO: modify data to be the data object returned from db insertion
-  if request.method == 'POST':
-    artist_name = request.form.get('name')
-    city = request.form.get('city')
-    venue_state = request.form.get('state')
-    phone = request.form.get('phone')
-    image_link = request.form.get('image_link')
-    genres = request.form.getlist('genres')
-    delim = ','
-    genres = delim.join(map(str, genres))
-    facebook_link = request.form.get('facebook_link')
-    seeking_venue = request.form.get('seeking_venue')
-    website = request.form.get('website')
-    seeking_description = request.form.get('seeking_description')
-  # on successful db insert, flash success
-  # TODO: on unsuccessful db insert, flash an error instead.
-  try:
-    create_artist_submission = artist(
-      artist_name=artist_name,
-      city=city,
-      venue_state=venue_state,
-      phone=phone,
-      image_link=image_link,
-      genres=genres,
-      facebook_link=facebook_link,
-      seeking_venue = seeking_venue,
-      website = website,
-      seeking_description = seeking_description
-    )
-    db.session.add(create_artist_submission)
-    db.session.commit()
-    flash('Artist ' + request.form['name'] + ' was successfully listed!')
-  except:
-     flash('An error occurred. Artist ' +request.form['name']  + ' could not be listed.')
-  finally:
-    db.session.close()
-  return render_template('pages/home.html')
+    form = ArtistForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        artist_name = request.form.get('name')
+        city = request.form.get('city')
+        venue_state = request.form.get('state')
+        phone = request.form.get('phone')
+        image_link = request.form.get('image_link')
+        genres = request.form.getlist('genres')
+        delim = ','
+        genres = delim.join(map(str, genres))
+        facebook_link = request.form.get('facebook_link')
+        seeking_venue = request.form.get('seeking_venue')
+        website = request.form.get('website')
+        seeking_description = request.form.get('seeking_description')
+        # on successful db insert, flash success
+        # TODO: on unsuccessful db insert, flash an error instead.
+        try:
+            create_artist_submission = artist(
+              artist_name=artist_name,
+              city=city,
+              venue_state=venue_state,
+              phone=phone,
+              image_link=image_link,
+              genres=genres,
+              facebook_link=facebook_link,
+              seeking_venue = seeking_venue,
+              website = website,
+              seeking_description = seeking_description)
+            db.session.add(create_artist_submission)
+            db.session.commit()
+            flash('Artist ' + request.form['name'] + ' was successfully listed!')
+        except:
+             flash('An error occurred. Artist ' +request.form['name']  + ' could not be listed.')
+             db.session.rollback()
+        finally:
+            db.session.close()
+    else:
+        flash('Invaild inputs')
+        return render_template('forms/new_artist.html', form=form)
+    return render_template('pages/home.html')
 
 
 #  Shows
@@ -408,26 +418,29 @@ def create_show_submission():
   # TODO: on unsuccessful db insert, flash an error instead.
   # e.g., flash('An error occurred. Show could not be listed.')
   # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
-  if request.method == 'POST':
+  form =  ShowForm()
+  if request.method == 'POST' and form.validate_on_submit():
     artist_id = request.form.get('artist_id')
     venue_id = request.form.get('venue_id')
     start_time = request.form.get('start_time')
-
-  try:
-    create_show_submission = show(
-      artist_id=artist_id,
-      venue_id=venue_id,
-      start_time=start_time
-    )
-    db.session.add(create_show_submission)
-    db.session.commit()
-    # on successful db insert, flash success
-    flash('Show was successfully listed!')
-  except:
-    flash('An error occurred. Show could not be listed.')
-  finally:
-    db.session.close()
-
+    try:
+        create_show_submission = show(
+          artist_id=artist_id,
+          venue_id=venue_id,
+          start_time=start_time
+        )
+        db.session.add(create_show_submission)
+        db.session.commit()
+        # on successful db insert, flash success
+        flash('Show was successfully listed!')
+    except:
+        flash('An error occurred. Show could not be listed.')
+        db.session.rollback()
+    finally:
+        db.session.close()
+  else:
+      flash('Invaild inputs')
+      return render_template('forms/new_show.html', form=form)
 
   return render_template('pages/home.html')
 

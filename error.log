@@ -1,1 +1,20 @@
+Hello, 
 
+First of all thanks alot for comprhensive review it is really appreciated. 
+I started by solving your mentioned bugs and for sure I will take ur suggestions into considration later on. 
+
+
+****************** models.py ********************
+Regarding your first required part in the models :
+"genres is a comma-concatenated string in Venue. To make sure it can be properly displayed in the frontend, you would need to transform it back to a list"
+
+I already handled it in the app.py as shown in error1.png, error2.png, error3.png and error4.png
+you will find that I recieved the array of the gener data.
+Then, I joined it with comma as shown in error1.png
+After That I inserted it as string sperated in comma in database as shown in error4.png 
+I split it in the frontend as shown in error3.png
+You can see that It is displayed in right format as sown in pic as shown in error2.png
+
+*******************************************************************************************************
+ 
+ 

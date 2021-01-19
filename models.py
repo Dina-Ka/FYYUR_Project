@@ -46,8 +46,7 @@ class venue(db.Model):
     seeking_artist = db.Column(db.String(120))
     website = db.Column(db.String(255))
     seeking_description = db.Column(db.String(255))
-    # venue = db.relationship('venue', secondary='show')
-    # show = db.relationship('show', backref=('venue'))
+    shows = db.relationship('show', backref="venue", lazy=True)
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
@@ -65,8 +64,7 @@ class artist(db.Model):
     seeking_venue =  db.Column(db.String(120))
     website =  db.Column(db.String(255))
     seeking_description = db.Column(db.String(255))
-    # artist = db.relationship('venue', secondary='show')
-    # show = db.relationship('show', backref=('artist'))
+    shows = db.relationship('show', backref="artist", lazy=True)
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
 # TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
@@ -79,6 +77,3 @@ class show(db.Model):
     start_time =db.Column(db.DateTime, default=datetime.datetime.utcnow)
     # venue = relationship("venue")
     # artist = relationship("artist")
-
-
-#
